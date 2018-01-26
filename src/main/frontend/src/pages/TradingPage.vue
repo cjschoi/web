@@ -1,33 +1,55 @@
 <template>
   <div id="trading">
+      <button type="button" class="btn btn-primary" autocomplate="off" data-loading-text="jquery with bootstrap" @click="clickBtn">jQuery테스트</button>
+
       <!-- 차트 -->
       <div id="chart">
-        차트
+        <b>차트</b>
       </div>
       <br/>
       <!-- 호가창 -->
       <div id="order-book">
-        호가창
+        <b호가창</b>
       </div>
       <br>
       <!-- 매수매도주문 order -->
       <div id="order-input">
-        매수매도주문
+        <b>매수매도주문</b>
       </div>
       <br>
       <!-- 체결정보 -->
       <div id="che-status">
-        체결정보
+        <b>체결정보</b>
+        <table>
+          <thead>
+          <tr>
+            <td>체결시간</td>
+            <td>매수/매도</td>
+            <td>체결가격</td>
+            <td>체결량</td>
+            <td>체결금액</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="marketData in marketHistory">
+            <td>{{marketData.candleDateTime}}</td>
+            <td>{{marketData.candleAccTradePrice}}</td>
+            <td>{{marketData.candleAccTradeVolume}}</td>
+            <td></td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
       </div>
       <br>
       <!-- 주문정보 -->
       <div id="corder-input">
-        주문정보
+        <b>주문정보</b>
       </div>
       <br>
       <!-- 코인시세 -->
       <div id="global-currency">
-        코인시세
+        <b>코인시세</b>
       </div>
   </div>
 </template>
@@ -35,58 +57,31 @@
 <script>
   import { mapActions, mapGetters } from 'vuex'
   export default {
-    mounted () {
-      this.getAllProducts()
+    created() {
+      setInterval(() => {
+        this.getMarketHistory();
+      }, 3 * 1000);
     },
     computed: {
       ...mapGetters([
-        'allProducts'
-      ]),
-      product () {
-        let id = parseInt(this.$route.params.id)
-        return this.allProducts.find((p) => p.id === id) || {}
-      }
+        'marketHistory'
+      ])
     },
     methods: {
       ...mapActions([
-        'getAllProducts',
-        'addToCart'
-      ])
+        'getMarketHistory',
+        'getCoinImage',
+        'getCoins'
+      ]),
+      clickBtn (event) {
+        $(event.target).button('loading')
+
+        setTimeout(function() {
+          $(event.target).button('reset')
+        }, 1000);
+      }
     }
   }
+
 </script>
 
-<style>
-.product-item {
-  margin: 10px 10px;
-  width: 500px;
-  height: 400px;
-  border-bottom: 1px solid #aaa;
-}
-
-.back-link {
-  font-size: 20px;
-}
-
-.product-title {
-  padding-top: 120px;
-  text-align: center;
-  margin: 0 auto;
-  font-size: 26px;
-}
-
-.product-details {
-  margin-top: 120px;
-}
-
-.inventory {
-  float: left;
-  font-size: 20px;
-  margin-top: 15px;
-}
-.add-button {
-  float: right;
-  width: 140px;
-  height: 50px;
-}
-</style>

@@ -1,19 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import CartPage from '@/pages/CartPage'
+
 import HomePage from '@/pages/HomePage'
+import CartPage from '@/pages/CartPage'
 import ProductPage from '@/pages/ProductPage'
 
-// 코인스탁 페이지 import
+// 코인스탁 메뉴
 import TradingPage from '@/pages/TradingPage'
 import StatementPage from '@/pages/StatementPage'
 import InvestmentPage from '@/pages/InvestmentPage'
 import CscenterPage from '@/pages/CscenterPage'
-import Mypage from '@/pages/Mypage'
+import MyPage from '@/pages/MyPage'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -53,7 +55,7 @@ export default new Router({
     { // 마이페이지
       path: '/mypage',
       name: 'mypage',
-      component: Mypage
+      component: MyPage
     }
   ]
 })

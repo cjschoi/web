@@ -6,6 +6,10 @@ import router from './router'
 import store from './store/index'
 import { sync } from 'vuex-router-sync'
 
+import 'expose-loader?$!expose-loader?jQuery!jquery'  // jquery
+import 'bootstrap' // bootstrap
+import 'bootstrap/dist/css/bootstrap.css'
+
 sync(store, router)
 
 Vue.config.productionTip = false
